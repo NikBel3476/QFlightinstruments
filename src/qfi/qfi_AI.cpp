@@ -20,7 +20,7 @@
  * IN THE SOFTWARE.
  ******************************************************************************/
 
-#include <qfi/qfi_AI.h>
+#include "qfi_AI.h"
 
 #ifdef WIN32
 #   include <float.h>

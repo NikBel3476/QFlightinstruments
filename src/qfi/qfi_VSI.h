@@ -27,7 +27,7 @@
 #include <QGraphicsView>
 #include <QGraphicsSvgItem>
 
-#include <qfi/qfi_defs.h>
+#include "qfi_defs.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -42,3 +42,14 @@ Both projects share the same source code.
 ## See also
 
 Visit [http://marekcel.pl/qflightinstruments](http://marekcel.pl/qflightinstruments) for more information.
+
+## Buil with cmake
+1. `cmake -B build`
+2. `cmake --build build`
+
+#### How to add library to cmake project
+```cmake
+add_subdirectory(path_to_lib_dir)
+
+target_link_libraries(project_name PRIVATE qflightinstruments)
+```

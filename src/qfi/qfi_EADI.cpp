@@ -20,7 +20,7 @@
  * IN THE SOFTWARE.
  ******************************************************************************/
 
-#include <qfi/qfi_EADI.h>
+#include "qfi_EADI.h"
 
 #ifdef WIN32
 #   include <float.h>
@@ -28,8 +28,8 @@
 
 #include <cmath>
 
-#include <qfi/qfi_Colors.h>
-#include <qfi/qfi_Fonts.h>
+#include "qfi_Colors.h"
+#include "qfi_Fonts.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 

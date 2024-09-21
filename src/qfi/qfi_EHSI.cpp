@@ -20,7 +20,7 @@
  * IN THE SOFTWARE.
  ******************************************************************************/
 
-#include <qfi/qfi_EHSI.h>
+#include "qfi_EHSI.h"
 
 #ifdef WIN32
 #   include <float.h>
@@ -29,8 +29,8 @@
 #include <cmath>
 #include <cstdio>
 
-#include <qfi/qfi_Colors.h>
-#include <qfi/qfi_Fonts.h>
+#include "qfi_Colors.h"
+#include "qfi_Fonts.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
