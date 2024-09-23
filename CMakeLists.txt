@@ -25,7 +25,7 @@ file(GLOB source_files
     ${PROJECT_SOURCE_DIR}/src/qfi/*.qrc
 )
 
-qt_add_library(${PROJECT_NAME} STATIC
+qt_add_library(${PROJECT_NAME} SHARED
     ${source_files}
 )
 
