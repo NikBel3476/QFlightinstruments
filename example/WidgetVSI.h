@@ -19,44 +19,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  ******************************************************************************/
-
-#include <example/WidgetAI.h>
-#include <ui_WidgetAI.h>
+#ifndef WIDGETVSI_H
+#define WIDGETVSI_H
 
 ////////////////////////////////////////////////////////////////////////////////
 
-WidgetAI::WidgetAI( QWidget *parent ) :
-    QWidget( parent ),
-    _ui( new Ui::WidgetAI ),
-    _ai ( Q_NULLPTR ),
-    _layoutSq ( Q_NULLPTR )
+#include <QWidget>
+
+#include <qfi_VSI.h>
+
+#include "LayoutSquare.h"
+
+////////////////////////////////////////////////////////////////////////////////
+
+namespace Ui
 {
-    _ui->setupUi( this );
-
-    setupUi();
-
-    _ai = _ui->graphicsAI;
+    class WidgetVSI;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-WidgetAI::~WidgetAI()
+class WidgetVSI : public QWidget
 {
-    if ( _layoutSq ) delete _layoutSq;
-    _layoutSq = Q_NULLPTR;
+    Q_OBJECT
 
-    if ( _ui ) delete _ui;
-    _ui = Q_NULLPTR;
-}
+public:
+
+    explicit WidgetVSI( QWidget *parent = Q_NULLPTR );
+
+    ~WidgetVSI();
+
+    inline void redraw() { _vsi->redraw(); }
+
+    inline void setClimbRate( double climbRate )
+    {
+        _vsi->setClimbRate( climbRate );
+    }
+
+private:
+
+    Ui::WidgetVSI *_ui;
+    qfi_VSI       *_vsi;
+    LayoutSquare  *_layoutSq;
+
+    void setupUi();
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void WidgetAI::setupUi()
-{
-    _layoutSq = new LayoutSquare( this );
-
-    _layoutSq->setContentsMargins( 0, 0, 0, 0 );
-    _layoutSq->addWidget( _ui->graphicsAI );
-
-    setLayout( _layoutSq );
-}
+#endif // WIDGETVSI_H

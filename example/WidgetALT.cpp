@@ -19,57 +19,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  ******************************************************************************/
-#ifndef WIDGETAI_H
-#define WIDGETAI_H
+
+#include <WidgetALT.h>
+#include <ui_WidgetALT.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <QWidget>
-
-#include <qfi/qfi_AI.h>
-
-#include "LayoutSquare.h"
-
-////////////////////////////////////////////////////////////////////////////////
-
-namespace Ui
+WidgetALT::WidgetALT( QWidget *parent ) :
+    QWidget( parent ),
+    _ui( new Ui::WidgetALT ),
+    _alt ( Q_NULLPTR ),
+    _layoutSq ( Q_NULLPTR )
 {
-    class WidgetAI;
+    _ui->setupUi( this );
+
+    setupUi();
+
+    _alt = _ui->graphicsALT;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class WidgetAI : public QWidget
+WidgetALT::~WidgetALT()
 {
-    Q_OBJECT
-    
-public:
+    if ( _layoutSq ) delete _layoutSq;
+    _layoutSq = Q_NULLPTR;
 
-    explicit WidgetAI( QWidget *parent = Q_NULLPTR );
-
-    ~WidgetAI();
-
-    inline void redraw() { _ai->redraw(); }
-
-    inline void setRoll( double roll )
-    {
-        _ai->setRoll( roll );
-    }
-
-    inline void setPitch( double pitch )
-    {
-        _ai->setPitch( pitch );
-    }
-    
-private:
-
-    Ui::WidgetAI  *_ui;
-    qfi_AI        *_ai;
-    LayoutSquare  *_layoutSq;
-
-    void setupUi();
-};
+    if ( _ui ) delete _ui;
+    _ui = Q_NULLPTR;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#endif // WIDGETAI_H
+void WidgetALT::setupUi()
+{
+    _layoutSq = new LayoutSquare( this );
+
+    _layoutSq->setContentsMargins( 0, 0, 0, 0 );
+    _layoutSq->addWidget( _ui->graphicsALT );
+
+    setLayout( _layoutSq );
+}

@@ -19,44 +19,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  ******************************************************************************/
-
-#include <example/WidgetTC.h>
-#include <ui_WidgetTC.h>
+#ifndef WIDGETHI_H
+#define WIDGETHI_H
 
 ////////////////////////////////////////////////////////////////////////////////
 
-WidgetTC::WidgetTC( QWidget *parent ) :
-    QWidget( parent ),
-    _ui( new Ui::WidgetTC ),
-    _tc ( Q_NULLPTR ),
-    _layoutSq ( Q_NULLPTR )
+#include <QWidget>
+
+#include <qfi_HI.h>
+
+#include "LayoutSquare.h"
+
+////////////////////////////////////////////////////////////////////////////////
+
+namespace Ui
 {
-    _ui->setupUi( this );
-
-    setupUi();
-
-    _tc = _ui->graphicsTC;
+    class WidgetHI;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-WidgetTC::~WidgetTC()
+class WidgetHI : public QWidget
 {
-    if ( _layoutSq ) delete _layoutSq;
-    _layoutSq = Q_NULLPTR;
+    Q_OBJECT
 
-    if ( _ui ) delete _ui;
-    _ui = Q_NULLPTR;
-}
+public:
+
+    explicit WidgetHI( QWidget *parent = Q_NULLPTR );
+
+    ~WidgetHI();
+
+    inline void redraw() { _hi->redraw(); }
+
+    inline void setHeading( double heading )
+    {
+        _hi->setHeading( heading );
+    }
+
+private:
+
+    Ui::WidgetHI  *_ui;
+    qfi_HI        *_hi;
+    LayoutSquare  *_layoutSq;
+
+    void setupUi();
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void WidgetTC::setupUi()
-{
-    _layoutSq = new LayoutSquare( this );
-
-    _layoutSq->setContentsMargins( 0, 0, 0, 0 );
-    _layoutSq->addWidget( _ui->graphicsTC );
-
-    setLayout( _layoutSq );
-}
+#endif // WIDGETHI_H

@@ -19,14 +19,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  ******************************************************************************/
-#ifndef WIDGETHI_H
-#define WIDGETHI_H
+#ifndef WIDGETASI_H
+#define WIDGETASI_H
 
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <QWidget>
 
-#include <qfi/qfi_HI.h>
+#include <qfi_ASI.h>
 
 #include "LayoutSquare.h"
 
@@ -34,32 +34,32 @@
 
 namespace Ui
 {
-    class WidgetHI;
+    class WidgetASI;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class WidgetHI : public QWidget
+class WidgetASI : public QWidget
 {
     Q_OBJECT
-
+    
 public:
 
-    explicit WidgetHI( QWidget *parent = Q_NULLPTR );
+    explicit WidgetASI( QWidget *parent = Q_NULLPTR );
 
-    ~WidgetHI();
+    ~WidgetASI();
 
-    inline void redraw() { _hi->redraw(); }
+    inline void redraw() { _asi->redraw(); }
 
-    inline void setHeading( double heading )
+    inline void setAirspeed( double airspeed )
     {
-        _hi->setHeading( heading );
+        _asi->setAirspeed( airspeed );
     }
-
+    
 private:
 
-    Ui::WidgetHI  *_ui;
-    qfi_HI        *_hi;
+    Ui::WidgetASI *_ui;
+    qfi_ASI       *_asi;
     LayoutSquare  *_layoutSq;
 
     void setupUi();
@@ -67,4 +67,4 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#endif // WIDGETHI_H
+#endif // WIDGETASI_H

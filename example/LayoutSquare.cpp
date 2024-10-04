@@ -20,7 +20,7 @@
  * IN THE SOFTWARE.
  ******************************************************************************/
 
-#include <example/LayoutSquare.h>
+#include "LayoutSquare.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -245,13 +245,13 @@ QSize LayoutSquare::calculateProperSize( QSize fromSize ) const
     
     if ( fromSize.height() < fromSize.width() )
     {
-        resultSize.setHeight ( fromSize.height() - margin() );
-        resultSize.setWidth  ( fromSize.height() - margin() );
+        resultSize.setHeight ( fromSize.height() - contentsMargins().top() );
+        resultSize.setWidth  ( fromSize.height() - contentsMargins().top() );
     }
     else
     {
-        resultSize.setHeight ( fromSize.width() - margin() );
-        resultSize.setWidth  ( fromSize.width() - margin() );
+        resultSize.setHeight ( fromSize.width() - contentsMargins().top() );
+        resultSize.setWidth  ( fromSize.width() - contentsMargins().top() );
     }
     
     return resultSize;

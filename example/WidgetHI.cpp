@@ -20,27 +20,27 @@
  * IN THE SOFTWARE.
  ******************************************************************************/
 
-#include <example/WidgetASI.h>
-#include <ui_WidgetASI.h>
+#include <WidgetHI.h>
+#include <ui_WidgetHI.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 
-WidgetASI::WidgetASI( QWidget *parent ) :
+WidgetHI::WidgetHI( QWidget *parent ) :
     QWidget( parent ),
-    _ui( new Ui::WidgetASI ),
-    _asi ( Q_NULLPTR ),
+    _ui( new Ui::WidgetHI ),
+    _hi ( Q_NULLPTR ),
     _layoutSq ( Q_NULLPTR )
 {
     _ui->setupUi( this );
 
     setupUi();
 
-    _asi = _ui->graphicsASI;
+    _hi = _ui->graphicsHI;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-WidgetASI::~WidgetASI()
+WidgetHI::~WidgetHI()
 {
     if ( _layoutSq ) delete _layoutSq;
     _layoutSq = Q_NULLPTR;
@@ -51,12 +51,12 @@ WidgetASI::~WidgetASI()
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void WidgetASI::setupUi()
+void WidgetHI::setupUi()
 {
     _layoutSq = new LayoutSquare( this );
 
     _layoutSq->setContentsMargins( 0, 0, 0, 0 );
-    _layoutSq->addWidget( _ui->graphicsASI );
+    _layoutSq->addWidget( _ui->graphicsHI );
 
     setLayout( _layoutSq );
 }

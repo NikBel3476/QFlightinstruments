@@ -19,57 +19,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  ******************************************************************************/
-#ifndef WIDGETALT_H
-#define WIDGETALT_H
+
+#include <WidgetASI.h>
+#include <ui_WidgetASI.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <QWidget>
-
-#include <qfi/qfi_ALT.h>
-
-#include "LayoutSquare.h"
-
-////////////////////////////////////////////////////////////////////////////////
-
-namespace Ui
+WidgetASI::WidgetASI( QWidget *parent ) :
+    QWidget( parent ),
+    _ui( new Ui::WidgetASI ),
+    _asi ( Q_NULLPTR ),
+    _layoutSq ( Q_NULLPTR )
 {
-    class WidgetALT;
+    _ui->setupUi( this );
+
+    setupUi();
+
+    _asi = _ui->graphicsASI;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class WidgetALT : public QWidget
+WidgetASI::~WidgetASI()
 {
-    Q_OBJECT
+    if ( _layoutSq ) delete _layoutSq;
+    _layoutSq = Q_NULLPTR;
 
-public:
-
-    explicit WidgetALT( QWidget *parent = Q_NULLPTR );
-
-    ~WidgetALT();
-
-    inline void redraw() { _alt->redraw(); }
-
-    inline void setAltitude( double altitude )
-    {
-        _alt->setAltitude( altitude );
-    }
-
-    inline void setPressure( double pressure )
-    {
-        _alt->setPressure( pressure );
-    }
-
-private:
-
-    Ui::WidgetALT *_ui;
-    qfi_ALT       *_alt;
-    LayoutSquare  *_layoutSq;
-
-    void setupUi();
-};
+    if ( _ui ) delete _ui;
+    _ui = Q_NULLPTR;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#endif // WIDGETALT_H
+void WidgetASI::setupUi()
+{
+    _layoutSq = new LayoutSquare( this );
+
+    _layoutSq->setContentsMargins( 0, 0, 0, 0 );
+    _layoutSq->addWidget( _ui->graphicsASI );
+
+    setLayout( _layoutSq );
+}

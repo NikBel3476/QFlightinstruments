@@ -19,44 +19,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  ******************************************************************************/
-
-#include <example/WidgetVSI.h>
-#include <ui_WidgetVSI.h>
+#ifndef WIDGETTC_H
+#define WIDGETTC_H
 
 ////////////////////////////////////////////////////////////////////////////////
 
-WidgetVSI::WidgetVSI( QWidget *parent ) :
-    QWidget( parent ),
-    _ui( new Ui::WidgetVSI ),
-    _vsi ( Q_NULLPTR ),
-    _layoutSq ( Q_NULLPTR )
+#include <QWidget>
+
+#include <qfi_TC.h>
+
+#include "LayoutSquare.h"
+
+////////////////////////////////////////////////////////////////////////////////
+
+namespace Ui
 {
-    _ui->setupUi( this );
-
-    setupUi();
-
-    _vsi = _ui->graphicsVSI;
+    class WidgetTC;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-WidgetVSI::~WidgetVSI()
+class WidgetTC : public QWidget
 {
-    if ( _layoutSq ) delete _layoutSq;
-    _layoutSq = Q_NULLPTR;
+    Q_OBJECT
 
-    if ( _ui ) delete _ui;
-    _ui = Q_NULLPTR;
-}
+public:
+
+    explicit WidgetTC( QWidget *parent = Q_NULLPTR );
+
+    ~WidgetTC();
+
+    inline void redraw() { _tc->redraw(); }
+
+    inline void setTurnRate( double turnRate )
+    {
+        _tc->setTurnRate( turnRate );
+    }
+
+    inline void setSlipSkid( double slipSkid )
+    {
+        _tc->setSlipSkid( slipSkid );
+    }
+
+private:
+
+    Ui::WidgetTC *_ui;
+    qfi_TC       *_tc;
+    LayoutSquare *_layoutSq;
+
+    void setupUi();
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void WidgetVSI::setupUi()
-{
-    _layoutSq = new LayoutSquare( this );
-
-    _layoutSq->setContentsMargins( 0, 0, 0, 0 );
-    _layoutSq->addWidget( _ui->graphicsVSI );
-
-    setLayout( _layoutSq );
-}
+#endif // WIDGETTC_H

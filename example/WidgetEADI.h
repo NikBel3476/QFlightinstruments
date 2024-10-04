@@ -26,7 +26,7 @@
 
 #include <QWidget>
 
-#include <qfi/qfi_EADI.h>
+#include <qfi_EADI.h>
 
 #include "LayoutSquare.h"
 

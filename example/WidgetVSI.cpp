@@ -19,52 +19,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  ******************************************************************************/
-#ifndef WIDGETASI_H
-#define WIDGETASI_H
+
+#include <WidgetVSI.h>
+#include <ui_WidgetVSI.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <QWidget>
-
-#include <qfi/qfi_ASI.h>
-
-#include "LayoutSquare.h"
-
-////////////////////////////////////////////////////////////////////////////////
-
-namespace Ui
+WidgetVSI::WidgetVSI( QWidget *parent ) :
+    QWidget( parent ),
+    _ui( new Ui::WidgetVSI ),
+    _vsi ( Q_NULLPTR ),
+    _layoutSq ( Q_NULLPTR )
 {
-    class WidgetASI;
+    _ui->setupUi( this );
+
+    setupUi();
+
+    _vsi = _ui->graphicsVSI;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class WidgetASI : public QWidget
+WidgetVSI::~WidgetVSI()
 {
-    Q_OBJECT
-    
-public:
+    if ( _layoutSq ) delete _layoutSq;
+    _layoutSq = Q_NULLPTR;
 
-    explicit WidgetASI( QWidget *parent = Q_NULLPTR );
-
-    ~WidgetASI();
-
-    inline void redraw() { _asi->redraw(); }
-
-    inline void setAirspeed( double airspeed )
-    {
-        _asi->setAirspeed( airspeed );
-    }
-    
-private:
-
-    Ui::WidgetASI *_ui;
-    qfi_ASI       *_asi;
-    LayoutSquare  *_layoutSq;
-
-    void setupUi();
-};
+    if ( _ui ) delete _ui;
+    _ui = Q_NULLPTR;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#endif // WIDGETASI_H
+void WidgetVSI::setupUi()
+{
+    _layoutSq = new LayoutSquare( this );
+
+    _layoutSq->setContentsMargins( 0, 0, 0, 0 );
+    _layoutSq->addWidget( _ui->graphicsVSI );
+
+    setLayout( _layoutSq );
+}

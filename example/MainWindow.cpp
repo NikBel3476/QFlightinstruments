@@ -20,8 +20,8 @@
  * IN THE SOFTWARE.
  ******************************************************************************/
 
-#include <example/MainWindow.h>
-#include <ui_MainWindow.h>
+#include "MainWindow.h"
+#include "ui_MainWindow.h"
 
 #include <iostream>
 #include <cmath>

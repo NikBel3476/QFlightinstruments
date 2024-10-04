@@ -19,57 +19,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  ******************************************************************************/
-#ifndef WIDGETTC_H
-#define WIDGETTC_H
+
+#include <WidgetTC.h>
+#include <ui_WidgetTC.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <QWidget>
-
-#include <qfi/qfi_TC.h>
-
-#include "LayoutSquare.h"
-
-////////////////////////////////////////////////////////////////////////////////
-
-namespace Ui
+WidgetTC::WidgetTC( QWidget *parent ) :
+    QWidget( parent ),
+    _ui( new Ui::WidgetTC ),
+    _tc ( Q_NULLPTR ),
+    _layoutSq ( Q_NULLPTR )
 {
-    class WidgetTC;
+    _ui->setupUi( this );
+
+    setupUi();
+
+    _tc = _ui->graphicsTC;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class WidgetTC : public QWidget
+WidgetTC::~WidgetTC()
 {
-    Q_OBJECT
+    if ( _layoutSq ) delete _layoutSq;
+    _layoutSq = Q_NULLPTR;
 
-public:
-
-    explicit WidgetTC( QWidget *parent = Q_NULLPTR );
-
-    ~WidgetTC();
-
-    inline void redraw() { _tc->redraw(); }
-
-    inline void setTurnRate( double turnRate )
-    {
-        _tc->setTurnRate( turnRate );
-    }
-
-    inline void setSlipSkid( double slipSkid )
-    {
-        _tc->setSlipSkid( slipSkid );
-    }
-
-private:
-
-    Ui::WidgetTC *_ui;
-    qfi_TC       *_tc;
-    LayoutSquare *_layoutSq;
-
-    void setupUi();
-};
+    if ( _ui ) delete _ui;
+    _ui = Q_NULLPTR;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#endif // WIDGETTC_H
+void WidgetTC::setupUi()
+{
+    _layoutSq = new LayoutSquare( this );
+
+    _layoutSq->setContentsMargins( 0, 0, 0, 0 );
+    _layoutSq->addWidget( _ui->graphicsTC );
+
+    setLayout( _layoutSq );
+}

@@ -19,77 +19,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  ******************************************************************************/
-#ifndef WIDGETEHSI_H
-#define WIDGETEHSI_H
+
+#include <WidgetEHSI.h>
+#include <ui_WidgetEHSI.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <QWidget>
-
-#include <qfi/qfi_EHSI.h>
-
-#include "LayoutSquare.h"
-
-////////////////////////////////////////////////////////////////////////////////
-
-namespace Ui
+WidgetEHSI::WidgetEHSI( QWidget *parent ) :
+    QWidget( parent ),
+    _ui( new Ui::WidgetEHSI ),
+    _ehsi ( Q_NULLPTR ),
+    _layoutSq ( Q_NULLPTR )
 {
-    class WidgetEHSI;
+    _ui->setupUi( this );
+
+    setupUi();
+
+    _ehsi = _ui->graphicsEHSI;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class WidgetEHSI : public QWidget
+WidgetEHSI::~WidgetEHSI()
 {
-    Q_OBJECT
+    if ( _layoutSq ) delete _layoutSq;
+    _layoutSq = Q_NULLPTR;
 
-public:
-
-    explicit WidgetEHSI( QWidget *parent = Q_NULLPTR );
-
-    virtual ~WidgetEHSI();
-
-    inline void redraw() { _ehsi->redraw(); }
-
-    inline void setHeading( double heading )
-    {
-        _ehsi->setHeading( heading );
-    }
-
-    inline void setCourse( double course )
-    {
-        _ehsi->setCourse( course );
-    }
-
-    inline void setBearing( double bearing, bool visible = false )
-    {
-        _ehsi->setBearing( bearing, visible );
-    }
-
-    inline void setDeviation( double deviation, qfi_EHSI::CDI cdi )
-    {
-        _ehsi->setDeviation( deviation, cdi );
-    }
-
-    inline void setDistance( double distance, bool visible = false )
-    {
-        _ehsi->setDistance( distance, visible );
-    }
-
-    inline void setHeadingSel( double headingBug )
-    {
-        _ehsi->setHeadingSel( headingBug );
-    }
-
-private:
-
-    Ui::WidgetEHSI *_ui;
-    qfi_EHSI       *_ehsi;
-    LayoutSquare   *_layoutSq;
-
-    void setupUi();
-};
+    if ( _ui ) delete _ui;
+    _ui = Q_NULLPTR;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#endif // WIDGETEHSI_H
+void WidgetEHSI::setupUi()
+{
+    _layoutSq = new LayoutSquare( this );
+
+    _layoutSq->setContentsMargins( 0, 0, 0, 0 );
+    _layoutSq->addWidget( _ui->frameEHSI );
+
+    setLayout( _layoutSq );
+}
