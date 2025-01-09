@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.16)
 project(qflightinstruments VERSION 0.2.0 LANGUAGES CXX)
 
 set(CMAKE_AUTOMOC ON)
@@ -110,3 +110,4 @@ qt_add_resources(${PROJECT_NAME} "qfi_images"
 )
 
 # add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/example)
+
