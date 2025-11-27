@@ -1,15 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(qflightinstruments VERSION 0.2.0 LANGUAGES CXX)
 
-set(CMAKE_AUTOMOC ON)
-
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
-
-if (NOT CMAKE_BUILD_TYPE)
-	set(CMAKE_BUILD_TYPE Release)
-else()
-	set(CMAKE_BUILD_TYPE Debug)
-endif()
 
 find_package(Qt6 REQUIRED COMPONENTS
     Core
@@ -23,8 +15,19 @@ file(GLOB source_files
     ${PROJECT_SOURCE_DIR}/src/*.cpp
 )
 
-qt_add_library(${PROJECT_NAME} STATIC
-    ${source_files}
+if (BUILD_SHARED_LIBS)
+    qt_add_library(${PROJECT_NAME}
+        ${source_files}
+    )
+else()
+    qt_add_library(${PROJECT_NAME} STATIC
+        ${source_files}
+    )
+endif()
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+  AUTOMOC ON
+  CXX_EXTENSIONS OFF
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
